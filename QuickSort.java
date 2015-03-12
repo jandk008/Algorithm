@@ -10,7 +10,9 @@ public class QuickSort extends Sort {
 
 	public void  quickSort(int low,int high){
 		if(low < high){
-			if(low+1 == high){
+			// end condition , otherwise dead loop occurs 
+			if(low+1 == high){ 
+				//consider equal situation  
 				if(getNumber(low)>=getNumber(high)){
 					swap(low, high);
 					return;
@@ -21,11 +23,13 @@ public class QuickSort extends Sort {
 			int right = high;
 
 			while (left<right){
+				//left pointer move until current number is larger than the pivat
 				while (left<right&&left<=high){
 					if(getNumber(left)<=pivat)
 						left++;
 					else break;
 				}
+				//right pointer move until current number is less than the pivat
 				while(left<=right&&right>low){
 					if(getNumber(right)>=pivat)
 						right--;
@@ -44,59 +48,12 @@ public class QuickSort extends Sort {
 		setNumber(getNumber(a), b);
 		setNumber(temp, a);
 	}
+	public static void main (String[] agrs){
+		QuickSort sort = new QuickSort();
+    	sort.initial();
+        sort.display();
+        sort.doSort();
+        sort.display();
+	}
 
-}
-/*
- Father class for sorting 
-*/
-
-abstract class Sort {
-    //array as sorting data structure 
-    private int[] array;
-    final int  size = 5;
-
-    public Sort() {
-    }
-
-    public void initial() {
-        if (array == null) {
-            array = new int[size];
-        }
-        for (int i = 0; i < size; i++) {
-//            array[i] = getNumberRandom(System.currentTimeMillis());
-        	array[i] = getNumberRandom(1);
-        }
-    }
-    @SuppressWarnings("unused")
-    private int getNumberRandom(double seed) {
-        return new Long(Math.round(Math.random() * seed/3600 + 1)).intValue(); // make sure that result is not 0
-    }
-
-    @SuppressWarnings("unused")
-	private int getNumberRandom(int seed){
-    	return Integer.parseInt(String.valueOf(Math.round(Math.random() * seed + 1)));
-    }
-
-    public abstract void doSort();
-
-    public void display() {
-        System.out.println("---------display starts  -------------");
-        for (int i = 0; i < size; i++) {
-            System.out.println(array[i]);
-        }
-        System.out.println("---------display end -------------");
-    }
-
-    public int getNumber(int i) {
-        return array[i];
-    }
-
-    public void setNumber(int i, int p) {
-        array[p] = i;
-    }
-
-    public int size() {
-        return size;
-
-    }
 }
